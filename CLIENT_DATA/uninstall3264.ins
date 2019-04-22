@@ -1,0 +1,104 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib gmbh
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/en/credits/
+
+[Actions]
+requiredWinstVersion >= "4.11.2.6"
+
+DefVar $UninstallProg32$
+DefVar $UninstallProgram32$
+DefVar $UninstallProgramOld32$
+DefVar $IniFile32$
+DefVar $UninstallProg64$
+DefVar $UninstallProgram64$
+DefVar $UninstallProgramOld64$
+DefVar $IniFile64$
+DefVar $IniCfgFile$
+DefVar $LogDir$
+DefVar $ExitCode$
+DefVar $ProductId$
+DefVar $InstallDir32$
+DefVar $InstallDir64$
+DefVar $INST_SystemType$
+DefVar $INST_architecture$
+DefVar $OLD_VERSION$
+DefVar $OLD_CREATOR_TAG$
+DefVar $OLD_RELEASE$
+DefVar $Reboot$
+
+Set $INST_SystemType$ = GetSystemType
+set $INST_architecture$ = GetProductProperty("inst_architecture","system specific")
+
+Set $LogDir$ = "%SystemDrive%\tmp"
+
+; The token BUILDER_VARIABLES will be replaced by opsi-builder.sh
+; and adds the following variables:
+;   from builder-product.cfg :  all variables definded by attribute WINST[index]
+;   from builder-product.cfg :  VENDOR PN VERSION RELEASE PRIORITY ADVICE TYPE   
+;   from opsi-builder.cfg    :  CREATOR_TAG CREATOR_NAME CREATOR_EMAIL           
+;   auto generated winst-variables
+;         $IconFile$: path to product picture
+;
+; Opsi Builder Variables
+DefVar $PackagePath$
+Set    $PackagePath$ = "%ScriptPath%"
+
+DefVar $Install32Exe$
+Set    $Install32Exe$ = $PackagePath$ + "\X86\mseinstall-4.8.204.0-x86.exe"
+DefVar $Install64Exe$
+Set    $Install64Exe$ = $PackagePath$ + "\X86_64\mseinstall-4.8.204.0-x64.exe"
+DefVar $VENDOR$
+Set    $VENDOR$ = "microsoft.com"
+DefVar $PN$
+Set    $PN$ = "security-essentials-ica"
+DefVar $VERSION$
+Set    $VERSION$ = "4.8.204"
+DefVar $RELEASE$
+Set    $RELEASE$ = "5"
+DefVar $PRIORITY$
+Set    $PRIORITY$ = "0"
+DefVar $NAME$
+Set    $NAME$ = "Microsoft Security Essentials"
+DefVar $ADVICE$
+Set    $ADVICE$ = ""
+DefVar $TYPE$
+Set    $TYPE$ = "public"
+DefVar $CREATOR_TAG$
+Set    $CREATOR_TAG$ = "go"
+DefVar $CREATOR_NAME$
+Set    $CREATOR_NAME$ = "Mario Fetka"
+DefVar $CREATOR_EMAIL$
+Set    $CREATOR_EMAIL$ = "mario.fetka@gmail.com"
+DefVar $IconFile$
+Set    $IconFile$ = "%ScriptPath%\security-essentials-ica.png"
+
+; Opsi INI File Variables
+
+;DefVar $UninstallProg32$
+Set    $UninstallProg32$ = "Setup.exe"
+;DefVar $UninstallProg64$
+Set    $UninstallProg64$ = "Setup.exe"
+
+;Hardcoded opsi vars
+Set    $ProductId$ = "security-essentials-ica"
+
+; ----------------------------------------------------------------
+; - Please edit the following values                             -
+; ----------------------------------------------------------------
+Set $InstallDir32$    = "%ProgramFiles32Dir%\Microsoft Security Client"
+Set $InstallDir64$    = "%ProgramFiles64Dir%\Microsoft Security Client"
+; ----------------------------------------------------------------
+
+Set $IniCfgFile$ = "%ScriptPath%\opsi-" + $ProductId$ + ".ini"
+
+comment "Show product picture"
+ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $NAME$
+
+Message "Uninstalling " + $ProductId$ + " ..."
+
+if FileExists("%ScriptPath%\delsub3264.ins")
+	comment "Start uninstall sub section"
+	Sub "%ScriptPath%\delsub3264.ins"
+endif
+

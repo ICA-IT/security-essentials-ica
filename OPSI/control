@@ -1,0 +1,39 @@
+[Package]
+version: 1
+depends: 
+
+[Product]
+type: localboot
+id: security-essentials-ica
+name: microsoft-security-essentials-ica
+description: microsoft ant-malware utility
+advice: 
+version: 4.8.204.0
+priority: 0
+licenseRequired: False
+productClasses: 
+setupScript: setup3264.ins
+uninstallScript: uninstall3264.ins
+updateScript: 
+alwaysScript: 
+onceScript: 
+customScript: 
+userLoginScript: 
+
+[ProductProperty]
+type: unicode
+name: inst_architecture
+multivalue: False
+editable: True
+description: the cpu architecture
+values: ["32 only", "64 only", "both", "system specific"]
+default: ["system specific"]
+
+[Changelog]
+security-essentials-ica (4.8.204.0-1) testing; urgency=low
+
+  * Initial package
+
+ -- john kuras <w7og@yahoo.com>  Tue, 13 Feb 2018 01:07:52 +0000
+
+
